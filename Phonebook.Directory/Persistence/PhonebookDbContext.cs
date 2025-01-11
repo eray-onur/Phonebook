@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using Phonebook.Directory.Domain;
-
 namespace Phonebook.Directory.Persistence
 {
     public class PhonebookDbContext : DbContext
