@@ -1,0 +1,6 @@
+@Phonebook.Report_HostAddress = http://localhost:5101
+
+GET {{Phonebook.Report_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
