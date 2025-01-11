@@ -9,7 +9,7 @@ services:
     image: postgres:latest
     environment:
         POSTGRES_USER: pbadmin
-        POSTGRES_PASSWORD: Rr3+{=AC9cB&Jhj;-n@8WG
+        POSTGRES_PASSWORD: Rr3+{=AC9cB&Jhj-n@8WG
         POSTGRES_DB: phonebook
     ports:
       - "5432:5432"
