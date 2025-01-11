@@ -44,4 +44,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run("http://*:8080");
+app.Run();
