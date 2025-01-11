@@ -49,5 +49,11 @@ namespace Phonebook.Directory.Controllers
             var result = await mediator.Send(new PersonListQuery());
             return Ok(result);
         }
+        [HttpGet("Details/{Id}")]
+        public async Task<IActionResult> Details([FromRoute] PersonDetailsRequestModel request)
+        {
+            var result = await mediator.Send(new PersonDetailsQuery(request));
+            return Ok(result);
+        }
     }
 }
