@@ -1,8 +1,7 @@
-﻿namespace Phonebook.Directory.Application.Models.Requests
+﻿namespace Phonebook.Directory.Application.Models.Requests.Person
 {
-    public class UpdatePersonRequestModel
+    public record AddPersonRequestModel
     {
-        public required Guid Id { get; set; }
         public required string Name { get; set; }
         public required string LastName { get; set; }
         public string? CompanyName { get; set; }
