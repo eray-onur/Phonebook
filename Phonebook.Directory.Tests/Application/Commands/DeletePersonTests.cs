@@ -7,7 +7,7 @@ using Moq;
 using Phonebook.Directory.Application.Commands.Person;
 using Phonebook.Directory.Application.Models;
 using Phonebook.Directory.Application.Models.Requests;
-using Phonebook.Directory.Application.Models.Responses;
+using Phonebook.Directory.Application.Models.Responses.Person;
 using Phonebook.Directory.Domain;
 using Phonebook.Directory.Persistence;
 

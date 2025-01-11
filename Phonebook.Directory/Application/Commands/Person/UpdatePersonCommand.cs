@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Phonebook.Directory.Application.Models;
-using Phonebook.Directory.Application.Models.Requests;
-using Phonebook.Directory.Application.Models.Responses;
+using Phonebook.Directory.Application.Models.Requests.Person;
+using Phonebook.Directory.Application.Models.Responses.Person;
 using Phonebook.Directory.Domain;
 using Phonebook.Directory.Persistence;
 

@@ -1,4 +1,4 @@
-﻿namespace Phonebook.Directory.Application.Models.Responses
+﻿namespace Phonebook.Directory.Application.Models.Responses.Person
 {
     public record DeletePersonResponseModel
     {

@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Phonebook.Directory.Application.Models.Responses;
 using Phonebook.Directory.Application.Models;
-using Phonebook.Directory.Application.Models.Requests;
 using Phonebook.Directory.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Phonebook.Directory.Application.Models.Requests.Person;
+using Phonebook.Directory.Application.Models.Responses.Person;
 
 namespace Phonebook.Directory.Application.Commands.Person
 {

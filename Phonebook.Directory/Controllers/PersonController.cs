@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Phonebook.Directory.Application.Commands.Person;
-using Phonebook.Directory.Application.Models.Requests;
+using Phonebook.Directory.Application.Models.Requests.Person;
 using Phonebook.Directory.Persistence;
 
 namespace Phonebook.Directory.Controllers
