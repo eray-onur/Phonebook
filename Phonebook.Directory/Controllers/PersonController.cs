@@ -34,5 +34,12 @@ namespace Phonebook.Directory.Controllers
             var result = await mediator.Send(new UpdatePersonCommand(request));
             return Ok(result);
         }
+
+        [HttpDelete("Delete/{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] DeletePersonRequestModel request)
+        {
+            var result = await mediator.Send(new DeletePersonCommand(request));
+            return Ok(result);
+        }
     }
 }
