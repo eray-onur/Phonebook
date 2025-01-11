@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 using Phonebook.Directory.Persistence;
 
@@ -8,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
+    AppDomain.CurrentDomain.GetAssemblies())
+);
 
 builder.Services.AddDbContext<PhonebookDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PhonebookConnection")));
@@ -39,4 +45,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run("http://*:8081");
+//app.Run("http://*:8081");
+app.Run();
