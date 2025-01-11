@@ -9,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
+    AppDomain.CurrentDomain.GetAssemblies())
+);
+
 builder.Services.AddDbContext<PhonebookDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PhonebookConnection")));
 
