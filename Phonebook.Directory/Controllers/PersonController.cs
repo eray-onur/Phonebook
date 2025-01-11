@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using Phonebook.Directory.Application.Commands.Person;
 using Phonebook.Directory.Application.Models.Requests.Person;
+using Phonebook.Directory.Application.Queries.Person;
 using Phonebook.Directory.Persistence;
 
 namespace Phonebook.Directory.Controllers
@@ -39,6 +40,13 @@ namespace Phonebook.Directory.Controllers
         public async Task<IActionResult> Delete([FromRoute] DeletePersonRequestModel request)
         {
             var result = await mediator.Send(new DeletePersonCommand(request));
+            return Ok(result);
+        }
+
+        [HttpGet("List")]
+        public async Task<IActionResult> List()
+        {
+            var result = await mediator.Send(new PersonListQuery());
             return Ok(result);
         }
     }
