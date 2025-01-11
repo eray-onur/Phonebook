@@ -14,22 +14,24 @@ namespace Phonebook.Directory.Controllers
     public class PersonController : ControllerBase
     {
 
-        private readonly ILogger<WeatherForecastController> logger;
-        private readonly PhonebookDbContext phonebookDbContext;
         private readonly IMediator mediator;
 
-        public PersonController(IMediator mediator, ILogger<WeatherForecastController> logger, PhonebookDbContext phonebookDbContext)
+        public PersonController(IMediator mediator)
         {
             this.mediator = mediator;
-            this.logger = logger;
-            this.phonebookDbContext = phonebookDbContext;
         }
 
-        [AllowAnonymous]
-        [HttpPost("CreatePerson")]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] AddPersonRequestModel request)
         {
             var result = await mediator.Send(new AddPersonCommand(request));
+            return Ok(result);
+        }
+
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromBody] UpdatePersonRequestModel request)
+        {
+            var result = await mediator.Send(new UpdatePersonCommand(request));
             return Ok(result);
         }
     }
