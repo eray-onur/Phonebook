@@ -1,8 +1,12 @@
 ﻿using MediatR;
 
+using Phonebook.Report.Application.Events;
 using Phonebook.Report.Application.Models.Requests.Report;
 using Phonebook.Report.Application.Models.Responses.Report;
+using Phonebook.Report.Infrastructure.Kafka;
 using Phonebook.Report.Persistence;
+
+using System.Text.Json;
 
 namespace Phonebook.Report.Application.Commands.Report
 {
@@ -10,10 +14,12 @@ namespace Phonebook.Report.Application.Commands.Report
     public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, CreateReportResponseModel>
     {
         private readonly PhonebookDbContext phonebookContext;
+        private readonly ProducerService producerService;
 
-        public CreateReportCommandHandler(PhonebookDbContext phonebookContext)
+        public CreateReportCommandHandler(PhonebookDbContext phonebookContext, ProducerService producerService)
         {
             this.phonebookContext = phonebookContext;
+            this.producerService = producerService;
         }
 
         public async Task<CreateReportResponseModel> Handle(CreateReportCommand request, CancellationToken cancellationToken)
@@ -32,6 +38,13 @@ namespace Phonebook.Report.Application.Commands.Report
             var addResult = await phonebookContext.SaveChangesAsync(cancellationToken);
 
             Guid insertedId = (addResult <= 0) ? Guid.Empty : newPerson.Id;
+            if (insertedId.Equals(Guid.Empty) == false)
+            {
+                await producerService.ProduceAsync(
+                    KafkaConstants.Topics.PersonListGenerate, 
+                    JsonSerializer.Serialize(new PersonListGenerateEvent(insertedId, request.model.Location))
+                );
+            }
 
             return new CreateReportResponseModel { CreatedId = insertedId };
         }

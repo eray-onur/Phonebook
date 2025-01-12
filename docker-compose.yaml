@@ -36,11 +36,11 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CREATE_TOPICS: "person-list-generate-topic:1:1,person-list-generated-topic:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks: 
         - phonebook-network
-
   directorywebapi: 
     environment:
         - ASPNETCORE_ENVIRONMENT=Development

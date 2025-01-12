@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 
+using Phonebook.Report.Infrastructure.Kafka;
 using Phonebook.Report.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddSingleton<ProducerService>();
+builder.Services.AddHostedService<ConsumerService>();
 
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
