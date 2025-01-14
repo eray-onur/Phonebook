@@ -17,8 +17,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<ProducerService>();
 
-builder.Services.AddDbContext<PhonebookDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PhonebookConnection")), ServiceLifetime.Scoped);
+builder.Services.AddDbContext<DirectoryDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DirectoryDb")), ServiceLifetime.Scoped);
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     AppDomain.CurrentDomain.GetAssemblies())

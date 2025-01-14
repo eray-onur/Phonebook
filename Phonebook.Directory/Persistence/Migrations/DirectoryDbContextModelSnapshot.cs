@@ -10,8 +10,8 @@ using Phonebook.Directory.Persistence;
 
 namespace Phonebook.Directory.Persistence.Migrations
 {
-    [DbContext(typeof(PhonebookDbContext))]
-    partial class PhonebookDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DirectoryDbContext))]
+    partial class DirectoryDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

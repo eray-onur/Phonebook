@@ -4,9 +4,9 @@ using Phonebook.Directory.Domain;
 
 namespace Phonebook.Directory.Persistence
 {
-    public class PhonebookDbContext : DbContext
+    public class DirectoryDbContext : DbContext
     {
-        public PhonebookDbContext(DbContextOptions<PhonebookDbContext> options) : base(options) { }
+        public DirectoryDbContext(DbContextOptions<DirectoryDbContext> options) : base(options) { }
 
         public DbSet<Person> People { get; set; }
         public DbSet<ContactInfo> ContactInfos { get; set; }

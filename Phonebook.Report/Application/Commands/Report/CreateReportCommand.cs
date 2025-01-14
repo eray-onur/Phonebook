@@ -13,10 +13,10 @@ namespace Phonebook.Report.Application.Commands.Report
     public record CreateReportCommand(CreateReportRequestModel model): IRequest<CreateReportResponseModel>;
     public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, CreateReportResponseModel>
     {
-        private readonly PhonebookDbContext phonebookContext;
+        private readonly ReportDbContext phonebookContext;
         private readonly ProducerService producerService;
 
-        public CreateReportCommandHandler(PhonebookDbContext phonebookContext, ProducerService producerService)
+        public CreateReportCommandHandler(ReportDbContext phonebookContext, ProducerService producerService)
         {
             this.phonebookContext = phonebookContext;
             this.producerService = producerService;

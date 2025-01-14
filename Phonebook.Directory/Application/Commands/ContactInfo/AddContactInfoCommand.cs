@@ -17,9 +17,9 @@ namespace Phonebook.Directory.Application.Commands.ContactInfo
 
     public class AddContactInfoCommandHandler : IRequestHandler<AddContactInfoCommand, AddContactInfoResponseModel>
     {
-        private readonly PhonebookDbContext phonebookContext;
+        private readonly DirectoryDbContext phonebookContext;
 
-        public AddContactInfoCommandHandler(PhonebookDbContext phonebookContext)
+        public AddContactInfoCommandHandler(DirectoryDbContext phonebookContext)
         {
             this.phonebookContext = phonebookContext;
         }
