@@ -22,8 +22,8 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
 
 builder.Services.AddScoped<INotificationHandler<PersonListGenerateEvent>, PersonListGenerateEventHandler>();
 
-builder.Services.AddDbContext<PhonebookDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PhonebookConnection")));
+builder.Services.AddDbContext<ReportDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ReportDb")));
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

@@ -11,9 +11,9 @@ namespace Phonebook.Report.Application.Queries
 
     public class ReportListQueryHandler : IRequestHandler<ReportListQuery, ReportListResponseModel>
     {
-        private readonly PhonebookDbContext phonebookContext;
+        private readonly ReportDbContext phonebookContext;
 
-        public ReportListQueryHandler(PhonebookDbContext phonebookContext)
+        public ReportListQueryHandler(ReportDbContext phonebookContext)
         {
             this.phonebookContext = phonebookContext;
         }

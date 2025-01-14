@@ -13,9 +13,9 @@ namespace Phonebook.Directory.Application.Events
     public class PersonListGenerateEventHandler : INotificationHandler<PersonListGenerateEvent>
     {
         private readonly ProducerService producerService;
-        private readonly PhonebookDbContext phonebookDbContext;
+        private readonly DirectoryDbContext phonebookDbContext;
 
-        public PersonListGenerateEventHandler(PhonebookDbContext phonebookDbContext, ProducerService producerService)
+        public PersonListGenerateEventHandler(DirectoryDbContext phonebookDbContext, ProducerService producerService)
         {
             this.producerService = producerService;
             this.phonebookDbContext = phonebookDbContext;

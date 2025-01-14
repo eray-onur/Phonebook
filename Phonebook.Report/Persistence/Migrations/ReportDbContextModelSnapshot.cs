@@ -10,8 +10,8 @@ using Phonebook.Report.Persistence;
 
 namespace Phonebook.Report.Persistence.Migrations
 {
-    [DbContext(typeof(PhonebookDbContext))]
-    partial class PhonebookDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ReportDbContext))]
+    partial class ReportDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

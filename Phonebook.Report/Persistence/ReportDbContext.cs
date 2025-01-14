@@ -4,10 +4,10 @@ using Phonebook.Report.Domain;
 
 namespace Phonebook.Report.Persistence
 {
-    public class PhonebookDbContext : DbContext
+    public class ReportDbContext : DbContext
     {
         public DbSet<PhonebookReport> Reports { get; set; }
-        public PhonebookDbContext(DbContextOptions<PhonebookDbContext> options) : base(options) { }
+        public ReportDbContext(DbContextOptions<ReportDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

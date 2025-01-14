@@ -11,9 +11,9 @@ namespace Phonebook.Directory.Application.Commands.Person
 
     public class DeletePersonCommandHandler : IRequestHandler<DeletePersonCommand, DeletePersonResponseModel>
     {
-        private readonly PhonebookDbContext phonebookContext;
+        private readonly DirectoryDbContext phonebookContext;
 
-        public DeletePersonCommandHandler(PhonebookDbContext phonebookContext)
+        public DeletePersonCommandHandler(DirectoryDbContext phonebookContext)
         {
             this.phonebookContext = phonebookContext;
         }

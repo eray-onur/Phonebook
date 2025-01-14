@@ -15,9 +15,9 @@ namespace Phonebook.Directory.Application.Commands.ContactInfo
 
     public class DeleteContactInfoCommandHandler : IRequestHandler<DeleteContactInfoCommand, DeleteContactInfoResponseModel>
     {
-        private readonly PhonebookDbContext phonebookContext;
+        private readonly DirectoryDbContext phonebookContext;
 
-        public DeleteContactInfoCommandHandler(PhonebookDbContext phonebookContext)
+        public DeleteContactInfoCommandHandler(DirectoryDbContext phonebookContext)
         {
             this.phonebookContext = phonebookContext;
         }

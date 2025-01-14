@@ -13,8 +13,8 @@ namespace Phonebook.Report.Application.Events
 
     public class PersonListGeneratedEventHandler : INotificationHandler<PersonListGeneratedEvent>
     {
-        private readonly PhonebookDbContext phonebookContext;
-        public PersonListGeneratedEventHandler(PhonebookDbContext phonebookContext)
+        private readonly ReportDbContext phonebookContext;
+        public PersonListGeneratedEventHandler(ReportDbContext phonebookContext)
         {
             this.phonebookContext = phonebookContext;
         }
