@@ -1,8 +1,12 @@
+using MediatR;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using Phonebook.Directory.Application.Events;
+using Phonebook.Directory.Infrastructure.Kafka;
 using Phonebook.Directory.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,12 +15,21 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<ProducerService>();
+
+builder.Services.AddDbContext<PhonebookDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PhonebookConnection")), ServiceLifetime.Scoped);
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     AppDomain.CurrentDomain.GetAssemblies())
 );
+builder.Services.AddScoped<INotificationHandler<PersonListGenerateEvent>, PersonListGenerateEventHandler>();
 
-builder.Services.AddDbContext<PhonebookDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PhonebookConnection")));
+builder.Services.AddHostedService<ConsumerService>();
+
+
+
+
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
