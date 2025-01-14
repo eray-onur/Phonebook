@@ -5,16 +5,31 @@ networks:
         driver: bridge
 
 services:
-  db:
+  directorydb:
     image: postgres:latest
     environment:
-        POSTGRES_USER: pbadmin
+        POSTGRES_USER: pbdirectoryadmin
         POSTGRES_PASSWORD: Rr3+{=AC9cB&Jhj-n@8WG
-        POSTGRES_DB: phonebook
+        POSTGRES_DB: directorydb
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata_directorydb:/var/lib/postgresql/data
+      - ./initsql_directorydb:/docker-entrypoint-initdb.d
+    networks: 
+        - phonebook-network
+
+  reportdb:
+    image: postgres:latest
+    environment:
+        POSTGRES_USER: pbreportadmin
+        POSTGRES_PASSWORD: Rr3+{=AC9cB&Jhj-n@8WG
+        POSTGRES_DB: reportdb
+    ports:
+      - "5435:5432"
+    volumes:
+      - pgdata_reportdb:/var/lib/postgresql/data
+      - ./initsql_reportdb:/docker-entrypoint-initdb.d
     networks: 
         - phonebook-network
 
@@ -36,11 +51,11 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CREATE_TOPICS: "person-list-generate-topic:1:1,person-list-generated-topic:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks: 
         - phonebook-network
-
   directorywebapi: 
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
@@ -51,7 +66,7 @@ services:
     ports: 
         - "5000:8081"
     depends_on: 
-        - db 
+        - directorydb 
         - kafka
     networks: 
         - phonebook-network
@@ -66,10 +81,11 @@ services:
     ports: 
         - "5001:8080"
     depends_on: 
-        - db 
+        - reportdb 
         - kafka
     networks: 
         - phonebook-network
 
 volumes:
-  pgdata:
+  pgdata_directorydb:
+  pgdata_reportdb:

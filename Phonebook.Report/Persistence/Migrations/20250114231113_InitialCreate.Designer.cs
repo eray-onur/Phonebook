@@ -11,8 +11,8 @@ using Phonebook.Report.Persistence;
 
 namespace Phonebook.Report.Persistence.Migrations
 {
-    [DbContext(typeof(PhonebookDbContext))]
-    [Migration("20250111233347_InitialCreate")]
+    [DbContext(typeof(ReportDbContext))]
+    [Migration("20250114231113_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

@@ -15,9 +15,9 @@ namespace Phonebook.Directory.Application.Commands.Person
 
     public class UpdatePersonCommandHandler : IRequestHandler<UpdatePersonCommand, UpdatePersonResponseModel>
     {
-        private readonly PhonebookDbContext phonebookContext;
+        private readonly DirectoryDbContext phonebookContext;
 
-        public UpdatePersonCommandHandler(PhonebookDbContext phonebookContext)
+        public UpdatePersonCommandHandler(DirectoryDbContext phonebookContext)
         {
             this.phonebookContext = phonebookContext;
         }

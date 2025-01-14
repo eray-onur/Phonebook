@@ -1,6 +1,10 @@
+using MediatR;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 
+using Phonebook.Report.Application.Events;
+using Phonebook.Report.Infrastructure.Kafka;
 using Phonebook.Report.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,13 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<ProducerService>();
+builder.Services.AddHostedService<ConsumerService>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     AppDomain.CurrentDomain.GetAssemblies())
 );
 
-builder.Services.AddDbContext<PhonebookDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PhonebookConnection")));
+builder.Services.AddScoped<INotificationHandler<PersonListGenerateEvent>, PersonListGenerateEventHandler>();
+
+builder.Services.AddDbContext<ReportDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ReportDb")));
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

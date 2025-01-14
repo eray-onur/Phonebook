@@ -15,9 +15,9 @@ namespace Phonebook.Directory.Application.Queries.Person
 
     public class PersonDetailsQueryHandler : IRequestHandler<PersonDetailsQuery, PersonDetailsResponseModel>
     {
-        private readonly PhonebookDbContext phonebookContext;
+        private readonly DirectoryDbContext phonebookContext;
 
-        public PersonDetailsQueryHandler(PhonebookDbContext phonebookContext)
+        public PersonDetailsQueryHandler(DirectoryDbContext phonebookContext)
         {
             this.phonebookContext = phonebookContext;
         }

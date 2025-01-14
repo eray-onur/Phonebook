@@ -13,9 +13,9 @@ namespace Phonebook.Report.Application.Queries
 
     public class ReportDetailsQueryHandler : IRequestHandler<ReportDetailsQuery, ReportDetailsResponseModel>
     {
-        private readonly PhonebookDbContext phonebookContext;
+        private readonly ReportDbContext phonebookContext;
 
-        public ReportDetailsQueryHandler(PhonebookDbContext phonebookContext)
+        public ReportDetailsQueryHandler(ReportDbContext phonebookContext)
         {
             this.phonebookContext = phonebookContext;
         }

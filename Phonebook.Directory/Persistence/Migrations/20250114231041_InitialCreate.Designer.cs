@@ -11,8 +11,8 @@ using Phonebook.Directory.Persistence;
 
 namespace Phonebook.Directory.Persistence.Migrations
 {
-    [DbContext(typeof(PhonebookDbContext))]
-    [Migration("20250111163400_InitialCreate")]
+    [DbContext(typeof(DirectoryDbContext))]
+    [Migration("20250114231041_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

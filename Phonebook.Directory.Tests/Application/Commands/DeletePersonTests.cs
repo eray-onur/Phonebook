@@ -22,17 +22,17 @@ namespace Phonebook.Directory.Tests.Application.Commands
 {
     public class DeletePersonTests
     {
-        private Mock<PhonebookDbContext> mockDirectoryContext;
+        private Mock<DirectoryDbContext> mockDirectoryContext;
         private Mock<IRequestHandler<DeletePersonCommand, DeletePersonResponseModel>> handler;
 
         [SetUp]
         public void SetUp()
         {
-            var options = new DbContextOptionsBuilder<PhonebookDbContext>()
+            var options = new DbContextOptionsBuilder<DirectoryDbContext>()
                 .UseInMemoryDatabase(databaseName: "PhonebookTestDb")
                 .Options;
 
-            mockDirectoryContext = new Mock<PhonebookDbContext>(options);
+            mockDirectoryContext = new Mock<DirectoryDbContext>(options);
 
             handler = new Mock<IRequestHandler<DeletePersonCommand, DeletePersonResponseModel>>();
         }

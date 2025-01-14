@@ -12,9 +12,9 @@ namespace Phonebook.Directory.Application.Commands.Person
 
     public class AddPersonCommandHandler : IRequestHandler<AddPersonCommand, AddPersonResponseModel>
     {
-        private readonly PhonebookDbContext phonebookContext;
+        private readonly DirectoryDbContext phonebookContext;
 
-        public AddPersonCommandHandler(PhonebookDbContext phonebookContext)
+        public AddPersonCommandHandler(DirectoryDbContext phonebookContext)
         {
             this.phonebookContext = phonebookContext;
         }
