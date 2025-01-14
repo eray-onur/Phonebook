@@ -1,6 +1,9 @@
+using MediatR;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 
+using Phonebook.Report.Application.Events;
 using Phonebook.Report.Infrastructure.Kafka;
 using Phonebook.Report.Persistence;
 
@@ -10,13 +13,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton<ProducerService>();
+builder.Services.AddScoped<ProducerService>();
 builder.Services.AddHostedService<ConsumerService>();
-
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     AppDomain.CurrentDomain.GetAssemblies())
 );
+
+builder.Services.AddScoped<INotificationHandler<PersonListGenerateEvent>, PersonListGenerateEventHandler>();
 
 builder.Services.AddDbContext<PhonebookDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PhonebookConnection")));

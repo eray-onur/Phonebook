@@ -3,6 +3,7 @@
 using MediatR;
 
 using Phonebook.Directory.Application.Events;
+using Phonebook.Directory.Persistence;
 
 using System.Text.Json;
 
@@ -15,13 +16,12 @@ namespace Phonebook.Directory.Infrastructure.Kafka
         private readonly IConsumer<Ignore, string> consumer;
         private ILogger<ConsumerService> logger;
         private readonly IConfiguration configuration;
-        private readonly IMediator mediator;
+        private readonly IServiceScopeFactory scopeFactory;
 
-        public ConsumerService(ILogger<ConsumerService> logger, IConfiguration configuration, IMediator mediator)
+        public ConsumerService(ILogger<ConsumerService> logger, IConfiguration configuration, IServiceScopeFactory scopeFactory)
         {
             this.logger = logger;
             this.configuration = configuration;
-            this.mediator = mediator;
             var consumerConfig = new ConsumerConfig
             {
                 BootstrapServers = configuration["Kafka:BootstrapServers"],
@@ -29,13 +29,14 @@ namespace Phonebook.Directory.Infrastructure.Kafka
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
             consumer = new ConsumerBuilder<Ignore, string>(consumerConfig).Build();
+            this.scopeFactory = scopeFactory;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             consumer.Subscribe(KafkaConstants.Topics.PersonListGenerate);
 
-            return Task.Run(() =>
+            return Task.Run(async () =>
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
@@ -54,7 +55,12 @@ namespace Phonebook.Directory.Infrastructure.Kafka
                     var reportEvent = JsonSerializer.Deserialize<PersonListGenerateEvent>(decodedJson, options);
                     if (reportEvent != null)
                     {
-                        mediator.Publish(reportEvent, stoppingToken);
+                        using (var scope = scopeFactory.CreateScope())
+                        {
+                            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+                            await mediator.Publish(new PersonListGenerateEvent(reportEvent.ReportId, reportEvent.Location), stoppingToken);
+                        }
                     }
                     else
                     {

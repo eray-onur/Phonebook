@@ -2,6 +2,8 @@
 
 using MediatR;
 
+using Microsoft.Extensions.Options;
+
 using Phonebook.Report.Application.Events;
 using Phonebook.Report.Application.Models.Responses.PersonList;
 
@@ -16,13 +18,13 @@ namespace Phonebook.Report.Infrastructure.Kafka
         private readonly IConsumer<Ignore, string> consumer;
         private ILogger<ConsumerService> logger;
         private readonly IConfiguration configuration;
-        private readonly IMediator mediator;
+        private readonly IServiceScopeFactory scopeFactory;
 
-        public ConsumerService(ILogger<ConsumerService> logger, IConfiguration configuration, IMediator mediator)
+        public ConsumerService(ILogger<ConsumerService> logger, IConfiguration configuration, IServiceScopeFactory scopeFactory)
         {
             this.logger = logger;
             this.configuration = configuration;
-            this.mediator = mediator;
+            this.scopeFactory = scopeFactory;
             var consumerConfig = new ConsumerConfig
             {
                 BootstrapServers = configuration["Kafka:BootstrapServers"],
@@ -36,7 +38,7 @@ namespace Phonebook.Report.Infrastructure.Kafka
         {
             consumer.Subscribe(KafkaConstants.Topics.PersonListGenerated);
 
-            return Task.Run(() =>
+            return Task.Run(async () =>
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
@@ -49,13 +51,15 @@ namespace Phonebook.Report.Infrastructure.Kafka
 
                     logger.LogInformation(decodedJson);
 
-                    var payload = JsonSerializer.Deserialize<PersonGeneratedListResponseModel>(decodedJson);
-                    if (payload != null)
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var reportEvent = JsonSerializer.Deserialize<PersonListGeneratedEvent>(decodedJson, options);
+                    if (reportEvent != null)
                     {
-                        mediator.Publish(
-                            new PersonListGeneratedEvent(payload.Location, payload.PhoneCount, payload.PersonCount),
-                            stoppingToken
-                        );
+                        using (var scope = scopeFactory.CreateScope())
+                        {
+                            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                            await mediator.Publish(reportEvent, stoppingToken); // You can use producerService here if needed
+                        }
                     }
 
                     logger.LogInformation($"Received person & contact list request: {message}");

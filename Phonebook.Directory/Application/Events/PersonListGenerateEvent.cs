@@ -15,7 +15,7 @@ namespace Phonebook.Directory.Application.Events
         private readonly ProducerService producerService;
         private readonly PhonebookDbContext phonebookDbContext;
 
-        public PersonListGenerateEventHandler(ProducerService producerService, PhonebookDbContext phonebookDbContext)
+        public PersonListGenerateEventHandler(PhonebookDbContext phonebookDbContext, ProducerService producerService)
         {
             this.producerService = producerService;
             this.phonebookDbContext = phonebookDbContext;

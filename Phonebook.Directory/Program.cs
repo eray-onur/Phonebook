@@ -15,17 +15,21 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<ProducerService>();
 
 builder.Services.AddDbContext<PhonebookDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PhonebookConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PhonebookConnection")), ServiceLifetime.Scoped);
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
     AppDomain.CurrentDomain.GetAssemblies())
 );
 builder.Services.AddScoped<INotificationHandler<PersonListGenerateEvent>, PersonListGenerateEventHandler>();
 
-builder.Services.AddScoped<ProducerService>();
 builder.Services.AddHostedService<ConsumerService>();
+
+
+
+
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
