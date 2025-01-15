@@ -58,5 +58,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//app.Run("http://*:8081");
-app.Run();
+app.Run("http://*:8081");
