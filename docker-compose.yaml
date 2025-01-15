@@ -26,10 +26,13 @@ services:
         POSTGRES_PASSWORD: Rr3+{=AC9cB&Jhj-n@8WG
         POSTGRES_DB: reportdb
     ports:
-      - "5435:5432"
+      - "5435:5435"
     volumes:
       - pgdata_reportdb:/var/lib/postgresql/data
       - ./initsql_reportdb:/docker-entrypoint-initdb.d
+    command: 
+      - "postgres" 
+      - "-p 5435"
     networks: 
         - phonebook-network
 
@@ -49,9 +52,10 @@ services:
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_CREATE_TOPICS: "person-list-generate-topic:1:1,person-list-generated-topic:1:1"
+      KAFKA_SECURITY_PROTOCOL: PLAINTEXT
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks: 
