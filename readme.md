@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a simple implementation of two microservices that make up a phonebook directory together which communicates through a Kafka container with one single topic and a partition. Orchestrated entirely by Docker Compose. 
+This is a simple implementation of two microservices that make up a phonebook directory together which communicates through a Kafka container with one single topic and a partition. Orchestrated entirely by Docker Compose, with an already prepared DDL migration scripts for the databases of both microservices which will be executed when the relevant postgresql containers are started.
 
 ### Directory
 
